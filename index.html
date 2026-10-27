@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080611">
+  <meta name="description" content="Um universo inteiro dedicado à Giovanna.">
+  <title>O Universo Entre Nós ✦</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a href="#inicio" class="brand">G <span>✦</span></a>
+    <a href="#memorias" class="nav-link">Nosso universo ↗</a>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="moon"></div>
+      <p class="eyebrow">UM UNIVERSO FOI CRIADO PARA VOCÊ</p>
+      <h1>O universo que<br>existe <em>entre nós.</em></h1>
+      <p class="intro">
+        Existem universos que começam com uma explosão.
+        O meu começou quando encontrei você.
+      </p>
+      <a class="button" href="#memorias">Encontrar o começo <span>↗</span></a>
+      <div class="scroll-note">DESLIZE PARA DESCOBRIR · ✦</div>
+    </section>
+
+    <section class="section memories" id="memorias">
+      <p class="eyebrow">CAPÍTULO I · NOSSA CONSTELAÇÃO</p>
+      <h2>Sete estrelas.<br><em>Uma história.</em></h2>
+      <p class="section-intro">
+        Cada estrela guarda algo que eu gostaria
+        que você pudesse sentir novamente.
+      </p>
+
+      <div class="star-map">
+        <button class="star-point s1" data-memory="0" aria-label="Abrir nossa origem">✦<span>Origem</span></button>
+        <button class="star-point s2" data-memory="1" aria-label="Abrir o começo">✦<span>Começo</span></button>
+        <button class="star-point s3" data-memory="2" aria-label="Abrir uma lembrança">✦<span>Lembranças</span></button>
+        <button class="star-point s4" data-memory="3" aria-label="Abrir admiração">✦<span>Você</span></button>
+        <button class="star-point s5" data-memory="4" aria-label="Abrir nossos laços">✦<span>Laços</span></button>
+        <button class="star-point s6" data-memory="5" aria-label="Abrir o esquecimento">✦<span>Memória</span></button>
+        <button class="star-point s7" data-memory="6" aria-label="Abrir o futuro">✦<span>Futuro</span></button>
+      </div>
+      <p class="hint">Toque nas estrelas para revelar seus segredos.</p>
+      <div class="memory-card" id="memory-card" aria-live="polite">
+        <span class="card-star">✧</span>
+        <h3 id="memory-title">O começo de tudo</h3>
+        <p id="memory-text">
+          Algumas histórias começam antes de sabermos
+          que estamos vivendo algo inesquecível.
+        </p>
+        <span class="edit-note">Uma lembrança nossa está esperando por você.</span>
+      </div>
+    </section>
+
+    <section class="section sun-moon" id="lua">
+      <p class="eyebrow">CAPÍTULO II · DUAS LUZES</p>
+      <h2>O Sol e <em>a Lua.</em></h2>
+      <p class="section-intro">
+        Duas luzes diferentes podem compartilhar o mesmo céu.
+      </p>
+      <div class="celestial-pair">
+        <button class="celestial sun" data-celestial="sun">
+          <span>☼</span><small>O SOL</small>
+        </button>
+        <button class="celestial lunar" data-celestial="moon">
+          <span>☾</span><small>A LUA</small>
+        </button>
+      </div>
+      <p class="celestial-message" id="celestial-message" aria-live="polite">
+        Escolha um dos astros e descubra sua mensagem.
+      </p>
+    </section>
+
+    <section class="section ocean" id="poesias">
+      <p class="eyebrow">CAPÍTULO III · PALAVRAS QUE PERMANECEM</p>
+      <h2>Um oceano<br><em>inteiro de nós.</em></h2>
+      <p class="section-intro">
+        Há sentimentos que não cabem em uma frase.
+        Então, escrevi um universo de palavras.
+      </p>
+      <div class="poem">
+        <span class="poem-mark">✧</span>
+        <p>
+          Antes de você, eu era um labirinto<br>
+          de perguntas procurando saída.<br>
+          Você não apagou meus caminhos;<br>
+          fez nascer estrelas em cada esquina.
+        </p>
+        <p>
+          E se o tempo embaralhar as lembranças,<br>
+          que estas palavras possam me recordar:<br>
+          há laços que não precisam de mapas<br>
+          para saber onde querem chegar.
+        </p>
+        <span class="signature">— Para você, Giovanna.</span>
+      </div>
+    </section>
+
+    <section class="section final-section" id="carta">
+      <div class="final-heart" aria-hidden="true">♡</div>
+      <p class="eyebrow">CAPÍTULO IV · PARA SEMPRE LEMBRADO</p>
+      <h2>Minha última<br><em>estrela.</em></h2>
+      <p class="section-intro">
+        Você chegou até aqui. Mas ainda existe
+        algo que eu quero te dizer.
+      </p>
+      <button class="button" id="open-letter">Abrir minha carta ✧</button>
+
+      <article class="letter" id="letter" hidden>
+        <p class="eyebrow">PARA A GIOVANNA</p>
+        <h3>Feliz aniversário, meu amor.</h3>
+        <p>
+          Se eu pudesse te oferecer um universo,
+          não escolheria o maior nem o mais brilhante.
+          Escolheria aquele em que você pudesse enxergar
+          o quanto sua existência tornou minha história especial.
+        </p>
+        <p>
+          Cada estrela deste pequeno universo guarda
+          um pedaço do que sinto. Não porque as palavras
+          sejam suficientes, mas porque tentei fazer delas
+          um caminho até você.
+        </p>
+        <p>
+          Que seu novo ciclo te traga descobertas,
+          coragem, alegria e motivos para continuar sonhando.
+          E que você nunca duvide do quanto merece ser feliz.
+        </p>
+        <p class="letter-end">Com amor, de alguém que escolhe você. ♡</p>
+        <p class="edit-note">
+          Esta carta é um rascunho. Personalize com suas próprias palavras.
+        </p>
+      </article>
+    </section>
+
+    <section class="music-section">
+      <p class="eyebrow">UMA CANÇÃO PARA A NOSSA VIAGEM</p>
+      <h2>Uma trilha para você.</h2>
+      <p>
+        “Procuro Alguém” — Djonga
+      </p>
+      <a class="button music-button"
+         href="https://www.youtube.com/results?search_query=Djonga+Procuro+Algu%C3%A9m"
+         target="_blank" rel="noopener noreferrer">
+        Encontrar a música ↗
+      </a>
+      <p class="edit-note">
+        Abra a música no serviço escolhido e inicie a reprodução.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <span>FEITO COM AMOR</span>
+    <p>Para Giovanna, sob o mesmo céu. ✦</p>
+  </footer>
+</body>
+</html>
