@@ -53,35 +53,34 @@ drawStars();
 
 window.addEventListener("resize", createStars);
 
-// EDITE ESTES TEXTOS PARA CONTAR A HISTÓRIA DE VOCÊS.
 const memories = [
   {
     title: "Onde nossos caminhos se cruzaram",
-    text: "Foi em um ensaio da igreja para a Festa Junina que nossos caminhos se encontraram. Aqui começa uma história que merece ser contada por nós."
+    text: "Foi no silêncio de um momento simples que a vida nos mostrou que algumas pessoas chegam para mudar a direção de tudo. E, desde então, cada passo parece ter sido desenhado para nos levar um ao outro."
   },
   {
     title: "O começo de tudo",
-    text: "Alguns começos parecem pequenos enquanto acontecem. Só depois percebemos o tamanho que ganharam dentro da gente."
+    text: "Nem sempre o início parece enorme quando acontece. Mas há encontros que crescem dentro da gente devagar, até se tornarem a parte mais bonita da nossa história."
   },
   {
     title: "Uma lembrança só nossa",
-    text: "Substitua este texto por uma lembrança de vocês: um passeio, uma conversa, uma risada ou um instante que você gostaria de reviver."
+    text: "Há momentos que não precisam de muitas palavras para se tornar inesquecíveis: a conversa, o riso, o jeito de se olhar e a sensação de que era natural estar junto. Esses são os meus favoritos."
   },
   {
     title: "O que eu admiro em você",
-    text: "Escreva aqui o que você admira na Giovanna, com palavras suas e detalhes que só você conhece."
+    text: "Eu admiro o jeito como você vive com gentileza, a força que você carrega mesmo nos seus dias mais cansados e a luz que você consegue espalhar sem nem perceber. Você é bonita de um jeito que toca a alma."
   },
   {
     title: "Os nossos laços",
-    text: "Há coisas que não cabem em fotografias. São os significados, os gestos e as palavras que tornam uma história única."
+    text: "O que nos une não é só o tempo, mas também o cuidado, a confiança e a vontade de construir algo verdadeiro juntos. São pequenos gestos que se transformam em um universo inteiro."
   },
   {
     title: "Aquilo que o tempo não apaga",
-    text: "Se algumas lembranças mudarem com o tempo, que o carinho com que foram vividas continue tendo seu lugar."
+    text: "Se o tempo mudar os detalhes, que ele nunca apague o carinho, a vontade de estar perto e a certeza de que esse amor foi valioso desde o começo."
   },
   {
     title: "O universo que ainda virá",
-    text: "Que o novo ciclo traga descobertas, sonhos, alegria e muitas histórias bonitas para escrever."
+    text: "E mesmo com todo o que já vivemos, ainda há um futuro bonito esperando por nós: sonhos, risadas, novas histórias e a certeza de que o melhor da jornada ainda está sendo escrito."
   }
 ];
 
@@ -109,10 +108,9 @@ memoryButtons.forEach((button) => {
     );
 
     memoryButtons.forEach((item) => {
-      item.setAttribute(
-        "aria-pressed",
-        String(item === button)
-      );
+      const active = item === button;
+      item.setAttribute("aria-pressed", String(active));
+      item.classList.toggle("is-active", active);
     });
   });
 });
@@ -129,6 +127,12 @@ document.querySelectorAll("[data-celestial]").forEach((button) => {
   button.addEventListener("click", () => {
     const type = button.dataset.celestial;
     celestialMessage.textContent = celestialMessages[type];
+
+    document.querySelectorAll("[data-celestial]").forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
   });
 });
 
@@ -171,115 +175,101 @@ document.addEventListener("visibilitychange", () => {
   const storageKey = "universo-giovanna:arquivo-sete-estrelas:v1";
   const missions = [
     {
-      title: "O nome que permaneceu",
+      title: "O nome que ficou",
       shortTitle: "Identidade",
-      narrative: "Três registros sobreviveram à fragmentação. Compare onde cada um foi escrito e identifique quem ocupa o centro deste arquivo.",
+      narrative: "Comece pelo básico: o arquivo repete a mesma pessoa em vários lugares. Encontre o nome que aparece em todos os registros.",
       evidence: [
-        "A assinatura do poema, no capítulo das palavras.",
-        "O endereçamento da carta original, no capítulo final.",
-        "A dedicatória que encerra o site, sob o mesmo céu."
+        "A assinatura do poema.",
+        "A carta final.",
+        "A dedicatória do site."
       ],
-      prompt: "Qual nome aparece como destinatária nos três registros?",
+      prompt: "Qual nome aparece nos três registros?",
       answer: "GIOVANNA",
       clues: [
-        "Não procure uma pessoa nova: compare as dedicatórias já espalhadas pela página.",
-        "O poema, a carta e o rodapé apontam para a mesma destinatária.",
-        "Use o nome repetido no poema, no endereçamento da carta e na despedida do rodapé."
+        "Compare os textos que parecem ser dedicados a alguém.",
+        "É o nome que aparece no poema, na carta e no rodapé.",
+        "É um nome de pessoa, sempre escrito em maiúsculas."
       ]
     },
     {
-      title: "O testemunho dos astros",
+      title: "A mensagem dos astros",
       shortTitle: "Sol e Lua",
-      narrative: "Os dois astros guardaram a mesma mensagem em sentidos opostos. Consulte os botões originais do Sol e da Lua no capítulo II: a chave da identidade define o avanço; a Lua desfaz o caminho.",
+      narrative: "Agora use a resposta anterior para entender o que os astros estão dizendo. O Sol avança e a Lua desfaz o caminho.",
       evidence: [
         "Mensagem registrada: RJRTWNF.",
-        "O Sol avança; a Lua retorna. Consulte os dois testemunhos originais antes de responder.",
-        "Na chave alfabética deste arquivo, A vale 1 e Z vale 26."
+        "O Sol move para frente e a Lua volta.",
+        "A chave usa o alfabeto com A=1 e Z=26."
       ],
-      prompt: "Qual palavra de sete letras reaparece quando a luz retorna?",
+      prompt: "Qual palavra aparece quando a mensagem volta ao início?",
       answer: "MEMORIA",
       clues: [
-        "A chave não é uma letra isolada: é o nome descoberto na missão anterior.",
-        "Some os valores das letras do nome usando A=1, B=2...; reduza o total pelo ciclo de 26 letras.",
-        "GIOVANNA soma 83; o resto da divisão por 26 é 5. Recue cinco posições em cada letra de RJRTWNF."
+        "Use o nome da missão anterior como chave.",
+        "Some os valores das letras e reduza pelo ciclo de 26.",
+        "O resultado final é uma palavra de sete letras."
       ]
     },
     {
-      title: "A data fora do lugar",
+      title: "A data escondida",
       shortTitle: "Cronologia",
-      narrative: "A palavra recuperada no testemunho anterior funciona como rótulo de catálogo: somente o envelope com esse nome pertence a esta cronologia. O arquivo menciona 17/07 como hipótese para a primeira vez em que Pedro e Giovanna ficaram; a data ainda precisa ser confirmada com Pedro.",
+      narrative: "A palavra da missão anterior identifica o envelope certo. A partir dele, a data aparece em uma ordem que parece invertida.",
       evidence: [
-        "Envelope MEMORIA: folha importada de um campo que registra mês antes do dia, 07/17.",
-        "Envelope DESTINO: recorte de outro arquivo, 12/24. A palavra da missão anterior identifica qual envelope investigar.",
-        "No calendário brasileiro, o dia vem antes do mês; um mês não pode ser maior que 12."
+        "Envelope MEMORIA com 07/17.",
+        "Envelope DESTINO com 12/24.",
+        "No Brasil, o dia vem antes do mês."
       ],
-      prompt: "Reconstrua a data na ordem dia-mês e digite os quatro algarismos, sem barra.",
+      prompt: "Qual é a data correta em formato dia-mês, sem barra?",
       answer: "1707",
       clues: [
-        "Não confie na ordem em que os algarismos aparecem no recorte estrangeiro.",
-        "Separe dia e mês; confira qual dos dois valores poderia ser um mês válido.",
-        "17 não pode ser mês. No formato dia/mês, escreva primeiro 17 e depois 07. A data continua pendente de confirmação."
+        "A ordem do registro está trocada.",
+        "17 não pode ser mês.",
+        "Coloque primeiro o dia e depois o mês."
       ]
     },
     {
-      title: "O poema que não se lê",
+      title: "A palavra no poema",
       shortTitle: "Poema-index",
-      narrative: "A data também é uma régua. O zero separa o dia do mês; cada algarismo restante aponta uma palavra, nunca uma letra. As iniciais formam o próximo testemunho.",
+      narrative: "A data vira leitura. Os números diferentes de zero levam a palavras no poema, e as iniciais revelam o próximo nome.",
       evidence: [],
-      prompt: "Use 1707: percorra os algarismos diferentes de zero em ordem, um por verso; conte palavras e recolha a inicial de cada palavra indicada.",
+      prompt: "Usando 1707, encontre a inicial da palavra certa em cada verso.",
       answer: "LUA",
       kind: "poem",
       clues: [
-        "A ordem dos versos importa. Pontuação não conta como palavra.",
-        "O zero é apenas a fronteira entre dia e mês; os índices usados são 1, 7 e 7.",
-        "Pegue a inicial da 1ª palavra do verso 1, da 7ª palavra do verso 2 e da 7ª palavra do verso 3."
+        "Use a ordem dos versos.",
+        "Zero não conta.",
+        "Pegue a inicial da palavra indicada em cada verso."
       ]
     },
     {
-      title: "A cifra dos esquecidos",
+      title: "A cifra certa",
       shortTitle: "Criptografia",
-      narrative: "O ruído não foi criado ao acaso. A cifra de Vigenère soma letras como números; agora, a palavra retirada do poema é a chave que desfaz a soma.",
+      narrative: "A palavra do poema vira a chave. A cifra precisa ser decifrada com essa chave para revelar a próxima resposta.",
       evidence: [
         "Texto cifrado: WUCZM.",
-        "Use a chave descoberta no poema, repetindo-a até cobrir todas as letras.",
-        "A=0, B=1... Z=25. Para decifrar, subtraia o valor da chave e volte ao início do alfabeto quando necessário."
+        "Use a chave repetida até cobrir todas as letras.",
+        "A=0, B=1... Z=25."
       ],
-      prompt: "Qual palavra retorna quando a chave é aplicada ao texto cifrado?",
+      prompt: "Qual palavra aparece ao decifrar a mensagem?",
       answer: "LACOS",
       clues: [
-        "A palavra-chave tem três letras e foi extraída do poema.",
-        "Repita a chave até ela ter o mesmo tamanho de WUCZM; cada posição opera separadamente.",
-        "Com LUA repetida (LUALU), calcule para cada posição: (cifra - chave + 26) mod 26."
+        "A chave tem 3 letras.",
+        "Repita a chave ao longo do texto.",
+        "Subtraia a chave de cada letra e volte ao início do alfabeto."
       ]
     },
     {
-      title: "As memórias fragmentadas",
-      shortTitle: "Fragmentos",
-      narrative: "Sete trechos sobreviveram fora de ordem. Cada um menciona a prova que o precede ou a consequência que o sucede. Reconstrua a cadeia causal; as iniciais da ordem correta formam a mensagem intermediária.",
-      evidence: [],
-      prompt: "Atribua uma posição única a cada fragmento. O primeiro não depende de outro registro; o último aponta para uma página ainda fechada.",
-      answer: "ABRACOS",
-      kind: "fragments",
-      clues: [
-        "Procure dependências: identidade, testemunho, data, poema, cifra, laços e a página final.",
-        "Cada trecho usa ou descreve o resultado de uma etapa anterior. O que aponta para a página ainda fechada só pode vir por último.",
-        "A cadeia é: identidade → astros → data → poema → cifra → laços → página final. Leia a inicial do primeiro termo de cada trecho nessa ordem."
-      ]
-    },
-    {
-      title: "Aquilo que ficou",
-      shortTitle: "O selo final",
-      narrative: "O arquivo aceita apenas um selo composto: reúna, na ordem em que foram descobertos, os seis resultados anteriores. A carta permanece fechada até que a sequência inteira seja reconhecida.",
+      title: "O selo final",
+      shortTitle: "Fechamento",
+      narrative: "Reúna as respostas das missões anteriores na ordem certa para abrir a carta final.",
       evidence: [
-        "Separe cada resultado com um espaço. Acentos, maiúsculas e pontuação não alteram a leitura.",
-        "O selo é local: este site não é um sistema de segurança e seu progresso pode ser alterado no navegador."
+        "Separe tudo com espaço.",
+        "Use as respostas corretas, sem títulos."
       ],
-      prompt: "Digite as seis descobertas, na ordem das missões, para abrir a carta secreta.",
-      answer: "GIOVANNA MEMORIA 1707 LUA LACOS ABRACOS",
+      prompt: "Digite o selo final para abrir a carta secreta.",
+      answer: "GIOVANNA MEMORIA 1707 LUA LACOS",
       clues: [
-        "O selo contém cinco palavras e uma sequência de quatro algarismos.",
-        "Use as respostas das missões 1 a 6, sem incluir os títulos das missões.",
-        "A ordem é: nome, testemunho, data, palavra do poema, palavra decifrada e iniciais dos fragmentos. Separe com espaços."
+        "É a ordem das missões anteriores.",
+        "Tem quatro palavras e uma sequência numérica.",
+        "Use: nome, memória, data, poema e cifra."
       ]
     }
   ];
@@ -291,16 +281,16 @@ document.addEventListener("visibilitychange", () => {
   ];
 
   const fragments = [
-    { id: "name", text: "A identidade confirmada inaugura o arquivo; nenhum registro vem antes dela." },
-    { id: "stars", text: "Brilho e silêncio foram comparados. Este testemunho vem imediatamente depois do registro da identidade." },
-    { id: "date", text: "Registro de calendário: fica imediatamente depois do testemunho dos astros e antes da leitura do poema." },
-    { id: "poem", text: "A leitura por índices transformou a data em uma palavra celeste. Este registro vem imediatamente depois do calendário." },
-    { id: "cipher", text: "Com essa palavra como chave, a cifra mostrou o vínculo. Este registro vem imediatamente depois do poema." },
-    { id: "bonds", text: "Os laços reúnem os registros anteriores. Este fragmento vem imediatamente depois da cifra." },
-    { id: "future", text: "Só então as sete estrelas indicam a página ainda fechada; este é o último registro, imediatamente depois dos laços." }
+    { id: "name", text: "A identidade confirmada inaugura o arquivo; este é o primeiro registro da linha do tempo." },
+    { id: "stars", text: "Brilho e silêncio foram comparados. Este testemunho vem logo depois do nome que começou a história." },
+    { id: "date", text: "O calendário aparece em seguida, antes da leitura que transforma a data em uma palavra do céu." },
+    { id: "poem", text: "A leitura por índices revela a palavra celeste. Este fragmento vem logo depois do registro do calendário." },
+    { id: "cipher", text: "Com essa palavra como chave, a cifra mostra o vínculo escondido. Este trecho vem imediatamente depois do poema." },
+    { id: "bonds", text: "Os laços reúnem tudo o que veio antes. Este fragmento segue a cifra e prepara o encerramento." },
+    { id: "future", text: "Só então as sete estrelas apontam para o fechamento; este é o último fragmento, depois dos laços." }
   ];
   const scrambledFragmentIds = ["date", "bonds", "name", "cipher", "future", "stars", "poem"];
-  const completedOutputs = ["GIOVANNA", "MEMORIA", "1707", "LUA", "LACOS", "ABRACOS"];
+  const completedOutputs = ["GIOVANNA", "MEMORIA", "1707", "LUA", "LACOS", "GIOVANNA MEMORIA 1707 LUA LACOS"];
 
   const elements = {
     progress: root.querySelector("#mystery-progress"),
@@ -318,6 +308,7 @@ document.addEventListener("visibilitychange", () => {
     hintButton: root.querySelector("#mystery-hint-button"),
     hintList: root.querySelector("#mystery-hint-list"),
     feedback: root.querySelector("#mystery-feedback"),
+    restartButton: root.querySelector("#mystery-restart-button"),
     notebookToggle: root.querySelector("#mystery-notebook-toggle"),
     notebook: root.querySelector("#mystery-notebook"),
     notebookItems: root.querySelector("#mystery-notebook-items"),
@@ -413,6 +404,7 @@ document.addEventListener("visibilitychange", () => {
       button.dataset.mission = String(index);
       button.disabled = locked;
       button.setAttribute("aria-current", state.selectedMission === index ? "step" : "false");
+      button.setAttribute("aria-pressed", String(state.selectedMission === index));
       if (completed) button.classList.add("is-complete");
       if (state.selectedMission === index) button.classList.add("is-selected");
 
@@ -476,15 +468,35 @@ document.addEventListener("visibilitychange", () => {
   function renderHints(index) {
     const level = state.clues[index] || 0;
     elements.hintList.replaceChildren();
-    missions[index].clues.slice(0, level).forEach((clue, clueIndex) => {
-      appendText(elements.hintList, "p", `Pista ${clueIndex + 1}: ${clue}`, "mystery-clue");
+
+    const visibleClues = missions[index].clues.slice(0, Math.max(1, level + 1));
+    visibleClues.forEach((clue, clueIndex) => {
+      const isFeatured = clueIndex === 0;
+      appendText(elements.hintList, "p", `${isFeatured ? "Dica rápida" : `Pista ${clueIndex + 1}`}: ${clue}`, isFeatured ? "mystery-clue mystery-clue-featured" : "mystery-clue");
     });
+
     elements.hintButton.disabled = level >= missions[index].clues.length || state.completed.includes(index);
     elements.hintButton.textContent = state.completed.includes(index)
       ? "Missão concluída"
       : level >= missions[index].clues.length
-        ? "Todas as pistas reveladas"
-      : `Revelar próxima pista (${level}/3)`;
+        ? "Dicas esgotadas"
+      : `Mostrar dica (${Math.min(level + 1, missions[index].clues.length)}/3)`;
+  }
+
+  function resetMysteryProgress() {
+    state.completed = [];
+    state.selectedMission = 0;
+    state.notes = "";
+    state.clues = {};
+    consultedWitnesses.clear();
+    try {
+      localStorage.removeItem(storageKey);
+    } catch {}
+    saveProgress();
+    renderProgress();
+    renderNotebook();
+    renderMission();
+    setFeedback("Arquivo reiniciado. Você pode começar do início novamente.", "notice");
   }
 
   function renderMission() {
@@ -498,18 +510,31 @@ document.addEventListener("visibilitychange", () => {
     elements.workspace.replaceChildren();
     elements.answer.value = "";
     elements.answerField.hidden = mission.kind === "fragments";
-    elements.answer.placeholder = index === 6
-      ? "Ex.: GIOVANNA MEMORIA 1707 LUA LACOS ABRACOS"
-      : "Digite sua resposta";
+    elements.answer.placeholder = index === missions.length - 1
+      ? "Ex.: GIOVANNA MEMORIA 1707 LUA LACOS"
+      : "Digite a resposta da missão";
     elements.submit.textContent = mission.kind === "fragments" ? "Conferir a sequência" : "Confirmar resposta";
     elements.answer.disabled = completed || mission.kind === "fragments";
     elements.submit.disabled = completed;
     renderEvidence(mission);
     renderHints(index);
 
+    const brief = document.createElement("div");
+    brief.className = "mystery-brief";
+    brief.innerHTML = `
+      <span class="mystery-brief-label">Objetivo</span>
+      <strong>${mission.shortTitle}</strong>
+      <small>${mission.narrative.length > 90 ? mission.narrative.slice(0, 90) + "..." : mission.narrative}</small>
+    `;
+    elements.workspace.prepend(brief);
+
+    if (!mission.kind && !completed) {
+      requestAnimationFrame(() => elements.answer.focus());
+    }
+
     if (mission.kind === "fragments") {
       appendText(elements.workspace, "p", "Atribua uma posição a cada fragmento. As sete posições devem ser usadas uma única vez.", "mystery-workspace-note");
-    } else if (index === 6) {
+    } else if (index === missions.length - 1) {
       appendText(elements.workspace, "p", "Reúna as respostas registradas no caderno, na ordem das missões. Separe os resultados por espaços.", "mystery-workspace-note");
     }
 
@@ -517,9 +542,9 @@ document.addEventListener("visibilitychange", () => {
     if (completed) {
       setFeedback("Esta missão já está registrada no caderno. Você pode revisitar suas pistas e provas.", "success");
     } else {
-      setFeedback("Investigue os registros e apresente sua conclusão.");
+      setFeedback("Siga a ordem do mistério e use as pistas dos registros para responder.");
     }
-    elements.secretLetter.hidden = !state.completed.includes(6);
+    elements.secretLetter.hidden = !state.completed.includes(missions.length - 1);
   }
 
   function renderNotebook() {
@@ -535,10 +560,6 @@ document.addEventListener("visibilitychange", () => {
       appendText(elements.notebookItems, "li", note);
     });
 
-    if (state.completed.includes(5)) {
-      const fragmentOrder = fragments.map((fragment) => fragment.id).join(" → ");
-      appendText(elements.notebookItems, "li", `Ordem dos fragmentos: ${fragmentOrder}`);
-    }
     elements.notes.value = state.notes;
   }
 
@@ -619,6 +640,11 @@ document.addEventListener("visibilitychange", () => {
       return;
     }
 
+    if (index > state.completed.length) {
+      setFeedback(`Complete a missão anterior antes de responder esta etapa. A sequência do arquivo é importante.`, "notice");
+      return;
+    }
+
     if (index === 1 && (consultedWitnesses.size !== 2)) {
       setFeedback("Consulte os dois testemunhos no capítulo do Sol e da Lua antes de concluir.", "notice");
       return;
@@ -639,7 +665,13 @@ document.addEventListener("visibilitychange", () => {
     state.clues[index] = level + 1;
     saveProgress();
     renderHints(index);
-    setFeedback(`Pista ${level + 1} revelada. Use-a junto às provas do arquivo.`);
+    setFeedback(`Dica ${Math.min(level + 1, missions[index].clues.length)} revelada. Use-a junto às provas do arquivo.`);
+  });
+
+  elements.restartButton.addEventListener("click", () => {
+    const shouldReset = window.confirm("Reiniciar o Arquivo das Sete Estrelas? Todo o progresso será apagado.");
+    if (!shouldReset) return;
+    resetMysteryProgress();
   });
 
   elements.notebookToggle.addEventListener("click", () => {

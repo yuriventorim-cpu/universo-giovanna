@@ -34,11 +34,39 @@
 
     <section class="section mystery-archive" id="arquivo" aria-labelledby="mystery-heading">
       <div id="mystery-root">
+        <div class="mystery-header-meta" aria-hidden="true">
+          <span class="mystery-seal">✦</span>
+          <span class="mystery-seal-label">Arquivo Secreto</span>
+        </div>
         <p class="eyebrow">ARQUIVO CONFIDENCIAL · SETE REGISTROS</p>
         <h2 id="mystery-heading">O Arquivo das<br><em>Sete Estrelas.</em></h2>
         <p class="section-intro mystery-intro">
           Algumas memórias foram separadas. Siga os vestígios, compare os testemunhos e reconstrua o que merece permanecer.
         </p>
+
+        <div class="mystery-rules" aria-label="Como funciona o quiz">
+          <span class="eyebrow">COMO FUNCIONA</span>
+          <ul>
+            <li>As missões precisam ser resolvidas em ordem.</li>
+            <li>As respostas corretas aparecem no caderno e abrem a próxima etapa.</li>
+            <li>O quiz funciona como um mistério narrativo: cada pista conecta com a seguinte.</li>
+          </ul>
+        </div>
+
+        <div class="mystery-visual-grid" aria-label="Ilustrações do arquivo">
+          <figure class="mystery-visual-card large">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Mesa com papéis e iluminação suave" />
+            <figcaption>Arquivo em investigação</figcaption>
+          </figure>
+          <figure class="mystery-visual-card">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&q=80" alt="Pessoas conversando em ambiente íntimo" />
+            <figcaption>Memórias compartilhadas</figcaption>
+          </figure>
+          <figure class="mystery-visual-card">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80" alt="Noite com luz suave e céu estrelado" />
+            <figcaption>O céu que guarda o segredo</figcaption>
+          </figure>
+        </div>
 
         <div class="mystery-progress-row">
           <div class="mystery-progress-copy">
@@ -68,7 +96,10 @@
           <nav class="mystery-mission-list" id="mystery-mission-list" aria-label="Missões do Arquivo das Sete Estrelas"></nav>
 
           <article class="mystery-casefile" aria-labelledby="mystery-mission-title">
-            <p class="eyebrow">DOSSIÊ EM ANÁLISE</p>
+            <div class="mystery-casefile-header">
+              <span class="mystery-file-icon">▣</span>
+              <p class="eyebrow">DOSSIÊ EM ANÁLISE</p>
+            </div>
             <h3 id="mystery-mission-title">Missão 01 · O nome que permaneceu</h3>
             <p class="mystery-narrative" id="mystery-mission-narrative"></p>
             <div class="mystery-evidence" id="mystery-evidence"></div>
@@ -84,9 +115,12 @@
               <button class="button mystery-submit" id="mystery-submit" type="submit">Confirmar resposta</button>
             </form>
 
-            <div class="mystery-hints">
-              <button class="mystery-hint-button" id="mystery-hint-button" type="button">Revelar próxima pista (0/3)</button>
-              <div id="mystery-hint-list" aria-live="polite"></div>
+            <div class="mystery-actions">
+              <div class="mystery-hints">
+                <button class="mystery-hint-button" id="mystery-hint-button" type="button">Mostrar dica (0/3)</button>
+                <div id="mystery-hint-list" aria-live="polite"></div>
+              </div>
+              <button class="mystery-restart-button" id="mystery-restart-button" type="button">Recomeçar</button>
             </div>
             <p class="mystery-feedback" id="mystery-feedback" role="status" aria-live="polite"></p>
           </article>
