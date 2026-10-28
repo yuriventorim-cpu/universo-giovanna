@@ -28,7 +28,80 @@
         O meu começou quando encontrei você.
       </p>
       <a class="button" href="#memorias">Encontrar o começo <span>↗</span></a>
+      <a class="archive-entry-link" href="#arquivo">Investigar o Arquivo das Sete Estrelas <span>↘</span></a>
       <div class="scroll-note">DESLIZE PARA DESCOBRIR · ✦</div>
+    </section>
+
+    <section class="section mystery-archive" id="arquivo" aria-labelledby="mystery-heading">
+      <div id="mystery-root">
+        <p class="eyebrow">ARQUIVO CONFIDENCIAL · SETE REGISTROS</p>
+        <h2 id="mystery-heading">O Arquivo das<br><em>Sete Estrelas.</em></h2>
+        <p class="section-intro mystery-intro">
+          Algumas memórias foram separadas. Siga os vestígios, compare os testemunhos e reconstrua o que merece permanecer.
+        </p>
+
+        <div class="mystery-progress-row">
+          <div class="mystery-progress-copy">
+            <span class="eyebrow">PROGRESSO DA INVESTIGAÇÃO</span>
+            <span id="mystery-progress-copy">0 de 7 missões concluídas</span>
+          </div>
+          <progress id="mystery-progress" max="7" value="0" aria-label="Progresso das sete missões"></progress>
+          <button class="mystery-notebook-button" id="mystery-notebook-toggle" type="button" aria-controls="mystery-notebook" aria-expanded="false">
+            Consultar caderno
+          </button>
+        </div>
+
+        <section class="investigator-notebook" id="mystery-notebook" aria-labelledby="mystery-notebook-heading" hidden>
+          <div>
+            <p class="eyebrow">REGISTROS DA INVESTIGADORA</p>
+            <h3 id="mystery-notebook-heading">Caderno de campo</h3>
+            <ul id="mystery-notebook-items"></ul>
+          </div>
+          <div class="investigator-notes-field">
+            <label for="mystery-notes">Anotações de Giovanna</label>
+            <textarea id="mystery-notes" rows="4" maxlength="2000" placeholder="Registre uma hipótese ou um detalhe importante."></textarea>
+            <p class="mystery-privacy-note">O progresso e as anotações ficam neste navegador e podem ser alterados por quem acessa o site.</p>
+          </div>
+        </section>
+
+        <div class="mystery-layout">
+          <nav class="mystery-mission-list" id="mystery-mission-list" aria-label="Missões do Arquivo das Sete Estrelas"></nav>
+
+          <article class="mystery-casefile" aria-labelledby="mystery-mission-title">
+            <p class="eyebrow">DOSSIÊ EM ANÁLISE</p>
+            <h3 id="mystery-mission-title">Missão 01 · O nome que permaneceu</h3>
+            <p class="mystery-narrative" id="mystery-mission-narrative"></p>
+            <div class="mystery-evidence" id="mystery-evidence"></div>
+            <p class="mystery-witness-status" id="mystery-witness-status" aria-live="polite"></p>
+            <p class="mystery-prompt" id="mystery-mission-prompt"></p>
+            <div class="mystery-workspace" id="mystery-workspace"></div>
+
+            <form class="mystery-answer-form" id="mystery-answer-form">
+              <div class="mystery-answer-field" id="mystery-answer-field">
+                <label for="mystery-answer">Conclusão</label>
+                <input id="mystery-answer" name="answer" type="text" autocomplete="off" aria-describedby="mystery-feedback" placeholder="Digite sua resposta">
+              </div>
+              <button class="button mystery-submit" id="mystery-submit" type="submit">Confirmar resposta</button>
+            </form>
+
+            <div class="mystery-hints">
+              <button class="mystery-hint-button" id="mystery-hint-button" type="button">Revelar próxima pista (0/3)</button>
+              <div id="mystery-hint-list" aria-live="polite"></div>
+            </div>
+            <p class="mystery-feedback" id="mystery-feedback" role="status" aria-live="polite"></p>
+          </article>
+        </div>
+
+        <article class="mystery-secret-letter" id="mystery-secret-letter" aria-labelledby="mystery-secret-heading" hidden>
+          <p class="eyebrow">REGISTRO FINAL · ABERTO</p>
+          <h3 id="mystery-secret-heading">Para Giovanna, sob o mesmo céu.</h3>
+          <p>Giovanna,</p>
+          <p>Se você chegou até aqui, reuniu cada pedaço sem deixar que o tempo apagasse o que ele significava. As sete estrelas eram só um jeito de conduzir você até estas palavras.</p>
+          <p>Há coisas que nenhuma cifra consegue guardar por inteiro: o cuidado, a admiração e a alegria de dividir a vida com alguém. Ainda assim, tentei deixar um pouco de tudo isso neste pequeno universo.</p>
+          <p>Que o seu novo ciclo traga espaço para sonhar, coragem para descobrir caminhos e muitos motivos para sorrir. E que, nos dias nublados, você se lembre de que é profundamente amada.</p>
+          <p class="mystery-letter-signature">Com amor, Pedro. ♡</p>
+        </article>
+      </div>
     </section>
 
     <section class="section memories" id="memorias">
