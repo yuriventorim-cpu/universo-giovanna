@@ -557,7 +557,26 @@ footer p {
   height: 100%;
   display: block;
   object-fit: cover;
-  filter: saturate(1.1) contrast(1.05) brightness(0.76);
+  filter: saturate(1.2) contrast(1.15) brightness(0.72) sepia(0.14);
+  transform: scale(1.03);
+}
+
+.mystery-visual-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 11, 25, 0.06), rgba(10, 8, 16, 0.32));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mystery-visual-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.12) 100%);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .mystery-visual-card figcaption {
