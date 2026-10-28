@@ -89,6 +89,57 @@ const memoryTitle = document.querySelector("#memory-title");
 const memoryText = document.querySelector("#memory-text");
 const memoryCard = document.querySelector("#memory-card");
 
+const midnightCountdown = document.querySelector("#midnight-countdown");
+const countdownHours = document.querySelector("#countdown-hours");
+const countdownMinutes = document.querySelector("#countdown-minutes");
+const countdownSeconds = document.querySelector("#countdown-seconds");
+const countdownMessage = document.querySelector("#countdown-message");
+const surpriseBox = document.querySelector("#surprise-box");
+
+function getNextMidnight() {
+  const now = new Date();
+  const next = new Date(now);
+  next.setHours(24, 0, 0, 0);
+  return next;
+}
+
+function updateCountdown() {
+  if (!midnightCountdown || !countdownHours || !countdownMinutes || !countdownSeconds || !countdownMessage || !surpriseBox) {
+    return;
+  }
+
+  const now = new Date();
+  const target = getNextMidnight();
+  const difference = target.getTime() - now.getTime();
+
+  if (difference <= 0) {
+    countdownHours.textContent = "00";
+    countdownMinutes.textContent = "00";
+    countdownSeconds.textContent = "00";
+    countdownMessage.textContent = "A meia-noite chegou. O presente foi revelado.";
+    surpriseBox.hidden = false;
+    surpriseBox.classList.add("is-open");
+    midnightCountdown.style.opacity = "0.9";
+    return;
+  }
+
+  const totalSeconds = Math.floor(difference / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  countdownHours.textContent = String(hours).padStart(2, "0");
+  countdownMinutes.textContent = String(minutes).padStart(2, "0");
+  countdownSeconds.textContent = String(seconds).padStart(2, "0");
+  countdownMessage.textContent = "Faltam alguns instantes para a surpresa.";
+  surpriseBox.hidden = true;
+}
+
+if (midnightCountdown) {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
+
 memoryButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const index = Number(button.dataset.memory);
