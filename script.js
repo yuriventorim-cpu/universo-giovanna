@@ -1,6 +1,27 @@
 
 const canvas = document.querySelector("#stars");
 const ctx = canvas.getContext("2d");
+const welcomeScreen = document.querySelector("#welcome-screen");
+const welcomeEnterButton = document.querySelector("#welcome-enter");
+const pageRegions = [document.querySelector(".topbar"), document.querySelector("main"), document.querySelector("footer")].filter(Boolean);
+
+if (welcomeScreen && welcomeEnterButton) {
+  pageRegions.forEach((region) => { region.inert = true; });
+  document.body.classList.add("welcome-active");
+  welcomeEnterButton.focus({ preventScroll: true });
+
+  welcomeEnterButton.addEventListener("click", () => {
+    welcomeEnterButton.disabled = true;
+    welcomeScreen.classList.add("is-leaving");
+    window.setTimeout(() => {
+      welcomeScreen.hidden = true;
+      pageRegions.forEach((region) => { region.inert = false; });
+      document.body.classList.remove("welcome-active");
+      document.querySelector("main")?.focus({ preventScroll: true });
+    }, 560);
+  }, { once: true });
+}
+
 const heartArtwork = new Image();
 const heartArtworkCanvas = document.createElement("canvas");
 const heartArtworkContext = heartArtworkCanvas.getContext("2d", { willReadFrequently: true });

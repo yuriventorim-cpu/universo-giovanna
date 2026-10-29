@@ -13,12 +13,26 @@
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
 
+  <section class="welcome-screen" id="welcome-screen" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-description" tabindex="-1">
+    <div class="welcome-screen-content">
+      <span class="welcome-mark" aria-hidden="true">G <i>✦</i></span>
+      <p class="welcome-kicker">UM PRESENTE FEITO COM AMOR</p>
+      <h1 id="welcome-title">Para Giovanna,<br>com todo <em>meu amor.</em></h1>
+      <p class="welcome-description" id="welcome-description">Preparei um pequeno universo para celebrar você e tudo o que torna nossa história tão especial.</p>
+      <button class="welcome-enter" id="welcome-enter" type="button">
+        Entrar no meu universo <span aria-hidden="true">↗</span>
+      </button>
+      <p class="welcome-signature">COM CARINHO, PEDRO</p>
+    </div>
+  </section>
+  <noscript><style>.welcome-screen { display: none !important; }</style></noscript>
+
   <header class="topbar">
     <a href="#inicio" class="brand">G <span>✦</span></a>
     <a href="#memorias" class="nav-link">Nosso universo ↗</a>
   </header>
 
-  <main>
+  <main tabindex="-1">
     <section class="hero" id="inicio">
       <div class="moon"></div>
       <p class="eyebrow">UM UNIVERSO FOI CRIADO PARA VOCÊ</p>
