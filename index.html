@@ -283,17 +283,21 @@
     <section class="music-section">
       <p class="eyebrow">UMA CANÇÃO PARA A NOSSA VIAGEM</p>
       <h2>Uma trilha para você.</h2>
-      <p>
-        “Procuro Alguém” — Djonga
-      </p>
-      <a class="button music-button"
-         href="https://www.youtube.com/results?search_query=Djonga+Procuro+Algu%C3%A9m"
-         target="_blank" rel="noopener noreferrer">
-        Encontrar a música ↗
-      </a>
-      <p class="edit-note">
-        Abra a música no serviço escolhido e inicie a reprodução.
-      </p>
+      <p>“Do I Wanna Know?” — Arctic Monkeys</p>
+      <div class="music-player">
+        <iframe
+          id="music-iframe"
+          src="https://www.youtube-nocookie.com/embed/bpOSxM0rNPM?loop=1&amp;playlist=bpOSxM0rNPM&amp;enablejsapi=1"
+          title="Arctic Monkeys - Do I Wanna Know? (Official Video)"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"></iframe>
+        <div class="music-error" id="music-error" hidden>
+          <p>O YouTube não conseguiu reproduzir a música aqui.</p>
+          <a href="https://www.youtube.com/watch?v=bpOSxM0rNPM" target="_blank" rel="noopener noreferrer">Abrir no YouTube ↗</a>
+        </div>
+      </div>
     </section>
   </main>
 

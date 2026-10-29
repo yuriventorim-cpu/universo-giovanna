@@ -1,15 +1,70 @@
 
 const canvas = document.querySelector("#stars");
 const ctx = canvas.getContext("2d");
+const heartArtwork = new Image();
+const heartArtworkCanvas = document.createElement("canvas");
+const heartArtworkContext = heartArtworkCanvas.getContext("2d", { willReadFrequently: true });
+let heartArtworkReady = false;
+
+heartArtwork.onload = () => {
+  const sourceScale = heartArtwork.naturalWidth / 1024;
+  const crop = { x: 240 * sourceScale, y: 65 * sourceScale, width: 550, height: 890 };
+  heartArtworkCanvas.width = crop.width;
+  heartArtworkCanvas.height = crop.height;
+  heartArtworkContext.drawImage(
+    heartArtwork,
+    crop.x, crop.y, crop.width * sourceScale, crop.height * sourceScale,
+    0, 0, crop.width, crop.height
+  );
+
+  const pixels = heartArtworkContext.getImageData(0, 0, crop.width, crop.height);
+  for (let index = 0; index < pixels.data.length; index += 4) {
+    const luminance = pixels.data[index] * 0.299 + pixels.data[index + 1] * 0.587 + pixels.data[index + 2] * 0.114;
+    pixels.data[index] = 245;
+    pixels.data[index + 1] = 226;
+    pixels.data[index + 2] = 231;
+    pixels.data[index + 3] = Math.max(0, Math.min(255, (220 - luminance) * 1.8));
+  }
+  heartArtworkContext.putImageData(pixels, 0, 0);
+  heartArtworkReady = true;
+};
+heartArtwork.src = "assets/heart-vintage-source.webp";
 
 let stars = [];
+let bars = [];
 let width = 0;
 let height = 0;
 let animationFrame;
+let musicIsPlaying = false;
+let musicPlaybackTime = 0;
+const musicTempo = 85;
+const pointer = { x: 0, y: 0 };
+const pointerTarget = { x: 0, y: 0 };
+let beatClock = 0;
+
+function updatePointerPosition(x, y) {
+  pointerTarget.x = x;
+  pointerTarget.y = y;
+  document.body.style.setProperty("--pointer-x", `${(x / Math.max(width, 1)) * 100}%`);
+  document.body.style.setProperty("--pointer-y", `${(y / Math.max(height, 1)) * 100}%`);
+}
+
+window.addEventListener("pointermove", (event) => {
+  updatePointerPosition(event.clientX, event.clientY);
+});
+
+window.addEventListener("pointerleave", () => {
+  updatePointerPosition(window.innerWidth * 0.5, window.innerHeight * 0.5);
+});
 
 function createStars() {
   width = window.innerWidth;
   height = window.innerHeight;
+  pointer.x = width * 0.5;
+  pointer.y = height * 0.5;
+  pointerTarget.x = width * 0.5;
+  pointerTarget.y = height * 0.5;
+  updatePointerPosition(pointer.x, pointer.y);
 
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(width * ratio);
@@ -19,30 +74,120 @@ function createStars() {
 
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-  const count = Math.min(150, Math.floor(width * height / 6500));
-
-  stars = Array.from({ length: count }, () => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    radius: Math.random() * 1.3 + 0.2,
-    alpha: Math.random() * 0.6 + 0.2,
-    speed: Math.random() * 0.008 + 0.002,
+  const count = Math.min(42, Math.floor(width / 28));
+  stars = Array.from({ length: count }, (_, index) => ({
+    x: (index / Math.max(count - 1, 1)) * width,
+    y: height * 0.5,
+    amplitude: Math.random() * 90 + 20,
+    base: Math.random() * 0.8 + 0.4,
+    speed: Math.random() * 0.03 + 0.012,
     phase: Math.random() * Math.PI * 2
+  }));
+
+  bars = Array.from({ length: count }, (_, index) => ({
+    offset: index,
+    amplitude: Math.random() * 0.8 + 0.4,
+    speed: Math.random() * 0.08 + 0.05,
+    phase: Math.random() * Math.PI * 2,
+    width: Math.max(2, width / count * 0.8)
   }));
 }
 
 function drawStars() {
   ctx.clearRect(0, 0, width, height);
 
-  for (const star of stars) {
-    star.phase += star.speed;
-    const opacity = star.alpha *
-      (0.65 + 0.35 * Math.sin(star.phase));
+  pointer.x += (pointerTarget.x - pointer.x) * 0.08;
+  pointer.y += (pointerTarget.y - pointer.y) * 0.08;
+
+  beatClock += 0.016;
+  const pulse = (Math.sin(beatClock * 3.4) + 1) / 2;
+  const heartbeat = Math.max(0, Math.sin(beatClock * 2.2));
+  const primaryBeat = Math.max(0, Math.sin(beatClock * 2.2 * Math.PI));
+  const heartThump = musicIsPlaying ? beatPulseFromMusic() : Math.max(0, Math.sin(beatClock * 1.8));
+  const pointerMotionX = (pointer.x - width / 2) / Math.max(width, 1);
+  const pointerMotionY = (pointer.y - height / 2) / Math.max(height, 1);
+
+  const blackout = ctx.createLinearGradient(0, 0, width, height);
+  blackout.addColorStop(0, "#020407");
+  blackout.addColorStop(0.5, "#090a11");
+  blackout.addColorStop(1, "#010204");
+  ctx.fillStyle = blackout;
+  ctx.fillRect(0, 0, width, height);
+
+  const aura = ctx.createRadialGradient(
+    width * 0.5,
+    height * 0.5,
+    0,
+    width * 0.5,
+    height * 0.5,
+    Math.max(width, height) * 0.9
+  );
+  aura.addColorStop(0, `rgba(185, 64, 108, ${0.1 + heartThump * 0.38 + Math.abs(pointerMotionX) * 0.18})`);
+  aura.addColorStop(0.25, "rgba(118, 44, 89, 0.18)");
+  aura.addColorStop(1, "rgba(0, 0, 0, 0)");
+  ctx.fillStyle = aura;
+  ctx.fillRect(0, 0, width, height);
+
+  for (let index = 0; index < bars.length; index += 1) {
+    const bar = bars[index];
+    const x = (index / Math.max(bars.length - 1, 1)) * width;
+    const pulseWave = Math.sin(beatClock * 4 + index * 0.6 + bar.phase) * (18 + bar.amplitude * 55);
+    const lineLift = (heartThump + pulse * 0.8) * 90 + (primaryBeat * 30);
+    const y = height * 0.5;
 
     ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(224, 211, 255, ${opacity})`;
+    for (let step = 0; step <= 18; step += 1) {
+      const px = x + ((step - 9) * 16) * (1 + pointerMotionX * 0.4);
+      const py = y + Math.sin(step * 0.9 + beatClock * 3.8 + bar.phase) * (lineLift * (0.14 + bar.amplitude * 0.35)) + pulseWave * 0.2;
+      if (step === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+
+    const alpha = 0.16 + heartThump * 0.7 + pulse * 0.2;
+    const red = 120 + Math.round(heartThump * 80);
+    const green = 80 + Math.round(heartThump * 35);
+    const blue = 130 + Math.round(heartThump * 60);
+    ctx.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+    ctx.lineWidth = 1 + heartThump * 1.7 + pulse * 0.6;
+    ctx.stroke();
+  }
+
+  if (heartArtworkReady) {
+    const centerX = width * 0.5;
+    const centerY = height * 0.52;
+    const imageHeight = Math.min(height * 0.82, width * 1.52, 690);
+    const imageWidth = imageHeight * (heartArtworkCanvas.width / heartArtworkCanvas.height);
+    const pulseScale = 1 + heartThump * 0.025;
+
+    ctx.save();
+    ctx.translate(centerX + pointerMotionX * 5, centerY + pointerMotionY * 4);
+    ctx.scale(pulseScale, pulseScale);
+    ctx.globalAlpha = 0.78 + heartThump * 0.18;
+    ctx.drawImage(heartArtworkCanvas, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight);
+    ctx.restore();
+  }
+
+  for (const star of stars) {
+    star.phase += star.speed * (1 + heartThump * 3.5);
+    const wave = Math.sin(star.phase + beatClock * 4) * star.amplitude;
+    const driftX = pointerMotionX * 22;
+    const driftY = pointerMotionY * 18;
+    star.x += Math.cos(star.phase) * 0.18 + driftX * 0.06;
+    star.y = height * 0.52 + wave * 0.7 + driftY * 1.6;
+
+    if (star.x < -30) star.x = width + 30;
+    if (star.x > width + 30) star.x = -30;
+
+    const opacity = 0.12 + heartThump * 0.8 + star.base * 0.2;
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, 1.2 + heartThump * 1.8, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
     ctx.fill();
+  }
+
+  if (heartThump > 0.58) {
+    ctx.fillStyle = `rgba(255, 140, 190, ${0.08 + heartThump * 0.18})`;
+    ctx.fillRect(0, 0, width, height);
   }
 
   animationFrame = requestAnimationFrame(drawStars);
@@ -52,6 +197,56 @@ createStars();
 drawStars();
 
 window.addEventListener("resize", createStars);
+
+const musicFrame = document.querySelector("#music-iframe");
+const musicError = document.querySelector("#music-error");
+const musicPlayerFrame = document.querySelector(".music-player");
+
+if (musicFrame) {
+  const musicUrl = new URL(musicFrame.src);
+  if (window.location.origin !== "null") {
+    musicUrl.searchParams.set("origin", window.location.origin);
+  }
+  musicFrame.src = musicUrl.toString();
+
+  window.onYouTubeIframeAPIReady = () => {
+    const player = new window.YT.Player(musicFrame, {
+      events: {
+        onStateChange: (event) => {
+          musicIsPlaying = event.data === 1;
+          document.body.classList.toggle("music-is-playing", musicIsPlaying);
+
+          if (musicIsPlaying) {
+            musicPlaybackTime = player.getCurrentTime();
+          }
+        },
+        onError: () => {
+          musicIsPlaying = false;
+          document.body.classList.remove("music-is-playing");
+          musicError.hidden = false;
+          musicPlayerFrame.classList.add("has-error");
+        }
+      }
+    });
+
+    window.setInterval(() => {
+      if (musicIsPlaying) {
+        musicPlaybackTime = player.getCurrentTime();
+      }
+    }, 120);
+  };
+
+  const youtubeApi = document.createElement("script");
+  youtubeApi.src = "https://www.youtube.com/iframe_api";
+  document.head.append(youtubeApi);
+}
+
+function beatPulseFromMusic() {
+  const beatPosition = (musicPlaybackTime * musicTempo) / 60;
+  const phase = (beatPosition % 1 + 1) % 1;
+  const envelope = 1 - Math.abs(phase * 2 - 1);
+  return musicIsPlaying ? Math.max(0.1, Math.pow(envelope, 2) * 1.2) : 0.12;
+}
 
 const memories = [
   {
