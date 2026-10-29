@@ -6,7 +6,7 @@
   --panel: #1d101d;
   --purple: #f0a7d1;
   --pale: #fff1f7;
-  --muted: #e7c7da;
+  --muted: #f0dce8;
   --line: rgba(255, 190, 220, 0.22);
   --glow: rgba(242, 164, 210, 0.38);
   --section-space: 80px;
@@ -1780,3 +1780,46 @@ footer p {
     font-size: 29px;
   }
 }
+
+body {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.nav-link { font-size: 12px; }
+.eyebrow { font-size: 10px; letter-spacing: 1.8px; }
+.intro, .section-intro, .memory-card p, .letter p, .celestial-message { font-size: 14px; }
+.countdown-message { font-size: 12px; }
+.countdown-unit small { font-size: 11px; }
+.scroll-note { color: #d3c9dc; font-size: 10px; }
+.star-point span { color: #f0dce8; font-size: 10px; }
+.hint, .edit-note { color: #ded5e5; font-size: 12px; }
+.celestial small { font-size: 11px; letter-spacing: 2px; }
+.music-player-label { font-size: 9px; letter-spacing: 1px; }
+.music-player-track small { font-size: 11px; }
+.music-player-status { font-size: 9px; }
+footer span { font-size: 10px; }
+
+.birthday-letter .eyebrow { font-size: 10px; }
+.birthday-letter p:not(.eyebrow) { font-size: 13px; }
+.mystery-rules ul { color: #f0eaf4; font-size: 13px; }
+.mystery-visual-card figcaption { font-size: 11px; letter-spacing: 1px; }
+.mystery-progress-copy { font-size: 12px; }
+.mystery-notebook-button, .mystery-hint-button, .mystery-restart-button { font-size: 12px; }
+#mystery-notebook-items { color: #e4dce9; font-size: 13px; }
+.investigator-notes-field label, .mystery-answer-field label { font-size: 12px; }
+.mystery-privacy-note, .mystery-workspace-note, .mystery-mission-status, .mystery-hint-button:disabled {
+  color: #d8cfe1;
+  font-size: 12px;
+}
+.mystery-mission:disabled { opacity: .72; }
+.mystery-mission-name { font-size: 12px; }
+.mystery-narrative, .mystery-prompt, .mystery-evidence-list, .mystery-fragment-text { font-size: 13px; }
+.mystery-witness-status, .mystery-brief-label { font-size: 11px; }
+.mystery-brief small { color: #f0eaf4; font-size: 12px; }
+.mystery-fragment select { font-size: 12px; }
+.mystery-clue { color: #e3dce9; font-size: 12px; }
+.mystery-feedback { color: #e3dce9; font-size: 12px; }
+.mystery-feedback[data-state="error"] { color: #ffc2c2; }
+.mystery-feedback[data-state="success"] { color: #daf0c8; }
+.mystery-secret-letter p:not(.eyebrow) { color: #eee7f2; font-size: 14px; }
