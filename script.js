@@ -201,6 +201,7 @@ window.addEventListener("resize", createStars);
 const musicFrame = document.querySelector("#music-iframe");
 const musicError = document.querySelector("#music-error");
 const musicPlayerFrame = document.querySelector(".music-player");
+const musicStatus = document.querySelector("#music-status");
 
 if (musicFrame) {
   const musicUrl = new URL(musicFrame.src);
@@ -215,6 +216,12 @@ if (musicFrame) {
         onStateChange: (event) => {
           musicIsPlaying = event.data === 1;
           document.body.classList.toggle("music-is-playing", musicIsPlaying);
+          musicPlayerFrame.classList.toggle("is-playing", musicIsPlaying);
+          musicStatus.textContent = musicIsPlaying
+            ? "TOCANDO"
+            : event.data === 2
+              ? "PAUSADA"
+              : "PRONTA";
 
           if (musicIsPlaying) {
             musicPlaybackTime = player.getCurrentTime();
@@ -223,6 +230,8 @@ if (musicFrame) {
         onError: () => {
           musicIsPlaying = false;
           document.body.classList.remove("music-is-playing");
+          musicPlayerFrame.classList.remove("is-playing");
+          musicStatus.textContent = "INDISPONÍVEL";
           musicError.hidden = false;
           musicPlayerFrame.classList.add("has-error");
         }
