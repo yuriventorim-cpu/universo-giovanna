@@ -328,44 +328,47 @@ const memoryTitle = document.querySelector("#memory-title");
 const memoryText = document.querySelector("#memory-text");
 const memoryCard = document.querySelector("#memory-card");
 
-const midnightCountdown = document.querySelector("#midnight-countdown");
-const countdownHours = document.querySelector("#countdown-hours");
-const countdownMinutes = document.querySelector("#countdown-minutes");
-const countdownSeconds = document.querySelector("#countdown-seconds");
 const countdownMessage = document.querySelector("#countdown-message");
 const surpriseBox = document.querySelector("#surprise-box");
 const giftOpenButton = document.querySelector("#gift-open-button");
 const birthdayBurst = document.querySelector("#birthday-burst");
-let birthdayGiftAvailable = false;
+const birthdayPhoto = document.querySelector("#birthday-photo");
+let birthdayGiftAvailable = true;
 let birthdaySurpriseOpened = false;
-
-function getNextMidnight() {
-  const now = new Date();
-  const next = new Date(now);
-  next.setHours(24, 0, 0, 0);
-  return next;
-}
-
-const countdownTarget = getNextMidnight();
 
 function launchBirthdayConfetti() {
   if (!birthdayBurst) return;
 
-  const colors = ["#ffe27a", "#ff82b4", "#9ee7ff", "#bfa3ff", "#9ff0c0", "#fff4f8"];
+  const colors = ["#ffe27a", "#ff82b4", "#9ee7ff", "#bfa3ff", "#9ff0c0", "#fff4f8", "#ff9b55", "#ffffff"];
   const kinds = ["is-square", "is-circle", "is-ribbon", "is-star"];
 
-  for (let index = 0; index < 56; index += 1) {
-    const angle = (Math.PI * 2 * index) / 56 + (Math.random() - 0.5) * 0.22;
-    const distance = 90 + Math.random() * 180;
+  for (let index = 0; index < 120; index += 1) {
+    const angle = (Math.PI * 2 * index) / 120 + (Math.random() - 0.5) * 0.3;
+    const distance = 120 + Math.random() * 250;
     const particle = document.createElement("span");
     particle.className = `birthday-confetti ${kinds[index % kinds.length]}`;
     particle.style.setProperty("--particle-color", colors[index % colors.length]);
     particle.style.setProperty("--burst-x", `${Math.cos(angle) * distance}px`);
     particle.style.setProperty("--burst-y", `${Math.sin(angle) * distance - 55}px`);
     particle.style.setProperty("--particle-spin", `${360 + Math.random() * 720}deg`);
-    particle.style.setProperty("--particle-delay", `${Math.random() * 0.16}s`);
+    particle.style.setProperty("--particle-delay", `${Math.random() * 0.24}s`);
+    particle.style.setProperty("--particle-duration", `${1.8 + Math.random() * 1.1}s`);
     particle.addEventListener("animationend", () => particle.remove(), { once: true });
     birthdayBurst.append(particle);
+  }
+}
+
+if (birthdayPhoto) {
+  const birthdayPhotoFrame = birthdayPhoto.closest(".birthday-photo-frame");
+  if (birthdayPhoto.complete) {
+    birthdayPhotoFrame.hidden = !birthdayPhoto.naturalWidth;
+  } else {
+    birthdayPhoto.addEventListener("load", () => {
+      birthdayPhotoFrame.hidden = false;
+    }, { once: true });
+    birthdayPhoto.addEventListener("error", () => {
+      birthdayPhotoFrame.hidden = true;
+    }, { once: true });
   }
 }
 
@@ -378,50 +381,12 @@ if (giftOpenButton && surpriseBox) {
     giftOpenButton.hidden = true;
     countdownMessage.textContent = "Feliz aniversário, Giovanna! Seu presente está aberto.";
     launchBirthdayConfetti();
-  }, { once: true });
+  });
 }
 
-function updateCountdown() {
-  if (!midnightCountdown || !countdownHours || !countdownMinutes || !countdownSeconds || !countdownMessage || !surpriseBox) {
-    return;
-  }
-
-  const now = new Date();
-  const difference = countdownTarget.getTime() - now.getTime();
-
-  if (difference <= 0) {
-    countdownHours.textContent = "00";
-    countdownMinutes.textContent = "00";
-    countdownSeconds.textContent = "00";
-    if (birthdaySurpriseOpened) {
-      countdownMessage.textContent = "Feliz aniversário, Giovanna! Seu presente está aberto.";
-    } else {
-      countdownMessage.textContent = "A meia-noite chegou. Abra sua surpresa!";
-    }
-    if (!birthdayGiftAvailable) {
-      birthdayGiftAvailable = true;
-      surpriseBox.hidden = false;
-      surpriseBox.classList.add("is-available");
-    }
-    midnightCountdown.style.opacity = "0.9";
-    return;
-  }
-
-  const totalSeconds = Math.floor(difference / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  countdownHours.textContent = String(hours).padStart(2, "0");
-  countdownMinutes.textContent = String(minutes).padStart(2, "0");
-  countdownSeconds.textContent = String(seconds).padStart(2, "0");
-  countdownMessage.textContent = "Faltam alguns instantes para a surpresa.";
-  surpriseBox.hidden = true;
-}
-
-if (midnightCountdown) {
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+if (surpriseBox) {
+  surpriseBox.hidden = false;
+  surpriseBox.classList.add("is-available");
 }
 
 memoryButtons.forEach((button) => {
