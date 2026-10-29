@@ -2,16 +2,30 @@
 const canvas = document.querySelector("#stars");
 const ctx = canvas.getContext("2d");
 const welcomeScreen = document.querySelector("#welcome-screen");
-const welcomeEnterButton = document.querySelector("#welcome-enter");
+const welcomeAccessForm = document.querySelector("#welcome-access-form");
+const welcomePassword = document.querySelector("#welcome-password");
+const welcomeFeedback = document.querySelector("#welcome-feedback");
 const pageRegions = [document.querySelector(".topbar"), document.querySelector("main"), document.querySelector("footer")].filter(Boolean);
 
-if (welcomeScreen && welcomeEnterButton) {
+if (welcomeScreen && welcomeAccessForm && welcomePassword && welcomeFeedback) {
   pageRegions.forEach((region) => { region.inert = true; });
   document.body.classList.add("welcome-active");
-  welcomeEnterButton.focus({ preventScroll: true });
+  welcomePassword.focus({ preventScroll: true });
 
-  welcomeEnterButton.addEventListener("click", () => {
-    welcomeEnterButton.disabled = true;
+  welcomeAccessForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (welcomePassword.value.trim().toLowerCase() !== "olhos") {
+      welcomePassword.setAttribute("aria-invalid", "true");
+      welcomeFeedback.textContent = "Essa palavra não abriu o presente. Tente outra vez.";
+      welcomePassword.focus();
+      return;
+    }
+
+    const submitButton = welcomeAccessForm.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+    welcomePassword.removeAttribute("aria-invalid");
+    welcomeFeedback.textContent = "A surpresa está pronta para você.";
     welcomeScreen.classList.add("is-leaving");
     window.setTimeout(() => {
       welcomeScreen.hidden = true;
@@ -19,7 +33,7 @@ if (welcomeScreen && welcomeEnterButton) {
       document.body.classList.remove("welcome-active");
       document.querySelector("main")?.focus({ preventScroll: true });
     }, 560);
-  }, { once: true });
+  });
 }
 
 const heartArtwork = new Image();

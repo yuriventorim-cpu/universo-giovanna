@@ -19,9 +19,14 @@
       <p class="welcome-kicker">UM PRESENTE FEITO COM AMOR</p>
       <h1 id="welcome-title">Para Giovanna,<br>com todo <em>meu amor.</em></h1>
       <p class="welcome-description" id="welcome-description">Preparei um pequeno universo para celebrar você e tudo o que torna nossa história tão especial.</p>
-      <button class="welcome-enter" id="welcome-enter" type="button">
-        Entrar no meu universo <span aria-hidden="true">↗</span>
-      </button>
+      <form class="welcome-access-form" id="welcome-access-form">
+        <label for="welcome-password">A palavra que abre este universo</label>
+        <input id="welcome-password" name="password" type="password" autocomplete="off" placeholder="Digite a senha" required>
+        <p class="welcome-feedback" id="welcome-feedback" role="status" aria-live="polite"></p>
+        <button class="welcome-enter" type="submit">
+          Entrar no meu universo <span aria-hidden="true">↗</span>
+        </button>
+      </form>
       <p class="welcome-signature">COM CARINHO, PEDRO</p>
     </div>
   </section>
