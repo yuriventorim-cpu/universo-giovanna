@@ -299,6 +299,8 @@ const countdownMinutes = document.querySelector("#countdown-minutes");
 const countdownSeconds = document.querySelector("#countdown-seconds");
 const countdownMessage = document.querySelector("#countdown-message");
 const surpriseBox = document.querySelector("#surprise-box");
+const birthdayBurst = document.querySelector("#birthday-burst");
+let birthdaySurpriseOpened = false;
 
 function getNextMidnight() {
   const now = new Date();
@@ -307,22 +309,48 @@ function getNextMidnight() {
   return next;
 }
 
+const countdownTarget = getNextMidnight();
+
+function launchBirthdayConfetti() {
+  if (!birthdayBurst) return;
+
+  const colors = ["#ffe27a", "#ff82b4", "#9ee7ff", "#bfa3ff", "#9ff0c0", "#fff4f8"];
+  const kinds = ["is-square", "is-circle", "is-ribbon", "is-star"];
+
+  for (let index = 0; index < 56; index += 1) {
+    const angle = (Math.PI * 2 * index) / 56 + (Math.random() - 0.5) * 0.22;
+    const distance = 90 + Math.random() * 180;
+    const particle = document.createElement("span");
+    particle.className = `birthday-confetti ${kinds[index % kinds.length]}`;
+    particle.style.setProperty("--particle-color", colors[index % colors.length]);
+    particle.style.setProperty("--burst-x", `${Math.cos(angle) * distance}px`);
+    particle.style.setProperty("--burst-y", `${Math.sin(angle) * distance - 55}px`);
+    particle.style.setProperty("--particle-spin", `${360 + Math.random() * 720}deg`);
+    particle.style.setProperty("--particle-delay", `${Math.random() * 0.16}s`);
+    particle.addEventListener("animationend", () => particle.remove(), { once: true });
+    birthdayBurst.append(particle);
+  }
+}
+
 function updateCountdown() {
   if (!midnightCountdown || !countdownHours || !countdownMinutes || !countdownSeconds || !countdownMessage || !surpriseBox) {
     return;
   }
 
   const now = new Date();
-  const target = getNextMidnight();
-  const difference = target.getTime() - now.getTime();
+  const difference = countdownTarget.getTime() - now.getTime();
 
   if (difference <= 0) {
     countdownHours.textContent = "00";
     countdownMinutes.textContent = "00";
     countdownSeconds.textContent = "00";
-    countdownMessage.textContent = "A meia-noite chegou. O presente foi revelado.";
+    countdownMessage.textContent = "A meia-noite chegou. Abra sua surpresa!";
     surpriseBox.hidden = false;
-    surpriseBox.classList.add("is-open");
+    if (!birthdaySurpriseOpened) {
+      birthdaySurpriseOpened = true;
+      requestAnimationFrame(() => surpriseBox.classList.add("is-open"));
+      launchBirthdayConfetti();
+    }
     midnightCountdown.style.opacity = "0.9";
     return;
   }
