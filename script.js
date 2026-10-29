@@ -334,7 +334,9 @@ const countdownMinutes = document.querySelector("#countdown-minutes");
 const countdownSeconds = document.querySelector("#countdown-seconds");
 const countdownMessage = document.querySelector("#countdown-message");
 const surpriseBox = document.querySelector("#surprise-box");
+const giftOpenButton = document.querySelector("#gift-open-button");
 const birthdayBurst = document.querySelector("#birthday-burst");
+let birthdayGiftAvailable = false;
 let birthdaySurpriseOpened = false;
 
 function getNextMidnight() {
@@ -367,6 +369,18 @@ function launchBirthdayConfetti() {
   }
 }
 
+if (giftOpenButton && surpriseBox) {
+  giftOpenButton.addEventListener("click", () => {
+    if (!birthdayGiftAvailable || birthdaySurpriseOpened) return;
+
+    birthdaySurpriseOpened = true;
+    surpriseBox.classList.add("is-open");
+    giftOpenButton.hidden = true;
+    countdownMessage.textContent = "Feliz aniversário, Giovanna! Seu presente está aberto.";
+    launchBirthdayConfetti();
+  }, { once: true });
+}
+
 function updateCountdown() {
   if (!midnightCountdown || !countdownHours || !countdownMinutes || !countdownSeconds || !countdownMessage || !surpriseBox) {
     return;
@@ -379,12 +393,15 @@ function updateCountdown() {
     countdownHours.textContent = "00";
     countdownMinutes.textContent = "00";
     countdownSeconds.textContent = "00";
-    countdownMessage.textContent = "A meia-noite chegou. Abra sua surpresa!";
-    surpriseBox.hidden = false;
-    if (!birthdaySurpriseOpened) {
-      birthdaySurpriseOpened = true;
-      requestAnimationFrame(() => surpriseBox.classList.add("is-open"));
-      launchBirthdayConfetti();
+    if (birthdaySurpriseOpened) {
+      countdownMessage.textContent = "Feliz aniversário, Giovanna! Seu presente está aberto.";
+    } else {
+      countdownMessage.textContent = "A meia-noite chegou. Abra sua surpresa!";
+    }
+    if (!birthdayGiftAvailable) {
+      birthdayGiftAvailable = true;
+      surpriseBox.hidden = false;
+      surpriseBox.classList.add("is-available");
     }
     midnightCountdown.style.opacity = "0.9";
     return;

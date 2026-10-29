@@ -215,6 +215,27 @@ h1 em, h2 em { color: var(--purple); font-weight: 400; }
   display: none;
 }
 
+.surprise-box.is-available {
+  animation: birthday-gift-arrive .55s ease-out both;
+}
+
+.gift-open-button.button {
+  min-height: 46px;
+  margin: 4px 0 14px;
+  border-color: rgba(255, 215, 235, 0.58);
+  background: linear-gradient(135deg, rgba(240, 167, 209, 0.22), rgba(119, 68, 111, 0.18));
+  color: #fff8fc;
+}
+
+.gift-open-button.button:hover {
+  border-color: #ffe4f2;
+  background: linear-gradient(135deg, rgba(240, 167, 209, 0.34), rgba(119, 68, 111, 0.28));
+}
+
+.gift-open-button[hidden] {
+  display: none;
+}
+
 .gift-wrapper {
   position: relative;
   z-index: 1;
@@ -397,6 +418,11 @@ h1 em, h2 em { color: var(--purple); font-weight: 400; }
   0% { transform: scale(1); }
   35% { transform: scale(1.16) rotate(4deg); }
   100% { transform: scale(.82) rotate(-6deg); opacity: .58; }
+}
+
+@keyframes birthday-gift-arrive {
+  from { opacity: 0; transform: translateY(14px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes gift-lid-launch {
