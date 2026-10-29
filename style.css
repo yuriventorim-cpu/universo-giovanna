@@ -630,9 +630,9 @@ footer p {
   .poem p { font-size: 18px; }
   .letter { padding: 25px 19px; }
   .music-player {
-    right: 12px;
-    bottom: 12px;
-    width: min(280px, calc(100vw - 24px));
+    position: static;
+    width: min(100%, 360px);
+    margin: 24px auto 0;
   }
 }
 
@@ -1418,6 +1418,19 @@ footer p {
 }
 
 @media (max-width: 760px) {
+  .mystery-visual-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mystery-visual-card.large {
+    grid-column: 1 / -1;
+    min-height: 230px;
+  }
+
+  .mystery-visual-card:not(.large) {
+    min-height: 180px;
+  }
+
   .mystery-progress-row {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 14px;
@@ -1448,6 +1461,15 @@ footer p {
 }
 
 @media (max-width: 520px) {
+  .mystery-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .mystery-visual-card:not(.large) {
+    min-height: 190px;
+  }
+
   .mystery-progress-row {
     grid-template-columns: 1fr;
   }
@@ -1485,6 +1507,12 @@ footer p {
 
   .mystery-fragment select {
     max-width: 190px;
+    min-height: 44px;
+  }
+
+  .mystery-notebook-button,
+  .mystery-hint-button {
+    min-height: 44px;
   }
 
   .mystery-answer-form {
